@@ -64,6 +64,23 @@ bbjseditor.createEditor = function(_divId, _width) {
 	italicButton.setAttribute("onclick", "bbjseditor.setItalic()");
 	buttonBarObj.appendChild(italicButton);
 	
+	var pictureButton = document.createElement("input");
+	pictureButton.setAttribute("type", "button");
+	pictureButton.setAttribute("id", "bbjseditor_button_picture");
+	pictureButton.setAttribute("class", "bbjseditor_button");
+	pictureButton.setAttribute("value", "P");
+	pictureButton.setAttribute("onclick", "bbjseditor.setPicture()");
+	buttonBarObj.appendChild(pictureButton);
+	
+	var htmlButton = document.createElement("input");
+	htmlButton.setAttribute("type", "button");
+	htmlButton.setAttribute("id", "bbjseditor_button_html");
+	htmlButton.setAttribute("class", "bbjseditor_button");
+	htmlButton.setAttribute("style", "width: 60px; float: right; margin-right: 5px;");
+	htmlButton.setAttribute("value", "HTML");
+	htmlButton.setAttribute("onclick", "bbjseditor.setHtmlPreview()");
+	buttonBarObj.appendChild(htmlButton);
+	
 	divElem.appendChild(buttonBarObj);
 	
 	
@@ -99,16 +116,11 @@ bbjseditor.createEditor = function(_divId, _width) {
 	var previewObj = document.createElement("div");
 	previewObj.setAttribute("id", "bbjseditor_preview");
 	previewObj.setAttribute("class", "bbjseditor_preview");
-	previewObj.setAttribute("style", "width: " + _width + "; height: " + editorHeight + ";");
+	previewObj.setAttribute("style", "width: " + _width + "; height: " + editorHeight + "; display: none;");
 	divElem.appendChild(previewObj);
 	
 	
 	bbjseditor.focus();
-	
-	
-	window.setInterval(function(){
-		bbjseditor.updatePreview();
-	}, 10);
 }
 
 
@@ -127,7 +139,49 @@ bbjseditor.setItalic = function() {
 }
 
 
+bbjseditor.setPicture = function() {
+	alert("setPicture");
+}
+
+
+bbjseditor.setHtmlPreview = function() {
+	var contentObj = document.getElementById("bbjseditor_content");
+	var previewObj = document.getElementById("bbjseditor_preview");
+	
+	bbjseditor.updateHtmlPreview();
+	
+	if (previewObj.style.display == "none") {
+		contentObj.style.display = "none";
+		previewObj.style.display = "";
+		
+		bbjseditor.selectHtmlButton(true);
+		
+	} else {
+		contentObj.style.display = "";
+		previewObj.style.display = "none";
+		
+		bbjseditor.selectHtmlButton(false);
+		bbjseditor.focus();
+	}
+}
+
+
+bbjseditor.checkHtmlPreviewMode = function() {
+	var previewObj = document.getElementById("bbjseditor_preview");
+	if (previewObj.style.display != "none") {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
 bbjseditor.execCommand = function(_command) {
+	
+	if (bbjseditor.checkHtmlPreviewMode()) {
+		return false;
+	}
+	
 	var selection = window.getSelection();
 	if (selection != null && selection != "") {
 		var range = selection.getRangeAt(0);
@@ -214,6 +268,21 @@ bbjseditor.selectItalicButton = function(_status) {
 }
 
 
+bbjseditor.statusOfHtmlButton = false;
+bbjseditor.selectHtmlButton = function(_status) {
+	var buttonId = "bbjseditor_button_html";
+	
+	if (_status == false) {
+		document.getElementById(buttonId).style.backgroundColor = "#FEFEFE";
+		bbjseditor.statusOfHtmlButton = false;
+		
+	} else {
+		document.getElementById(buttonId).style.backgroundColor = "#DDDDDD";
+		bbjseditor.statusOfHtmlButton = true;
+	}
+}
+
+
 bbjseditor.focus = function() {
 	document.getElementById("bbjseditor_content").focus();
 }
@@ -244,6 +313,7 @@ bbjseditor.wrapTagText = function(_beforeTag, _afterTag) {
 }
 
 
+/*
 bbjseditor.wrapTagHTML = function(_beforeTag, _afterTag) {
 	var selection = window.getSelection();
 	if (selection == null) {
@@ -273,6 +343,7 @@ bbjseditor.wrapTagHTML = function(_beforeTag, _afterTag) {
 	resultHTML = bbjseditor.replaceAll(resultHTML, "<aftertag></aftertag>", _afterTag);
 	contentObj.innerHTML = resultHTML;
 }
+*/
 
 
 bbjseditor.endsWith = function(_target, _str) {
@@ -315,7 +386,8 @@ bbjseditor.calcEditorHeight = function() {
 	var margin = 40;
 	
 	var innerHeight = parseInt(window.innerHeight, 10);
-	var newVal = (innerHeight - titleBarHeight - buttonBarHeight - margin) / 2;
+	// var newVal = (innerHeight - titleBarHeight - buttonBarHeight - margin) / 2;
+	var newVal = (innerHeight - titleBarHeight - buttonBarHeight - margin);
 	newVal = bbjseditor.parseInt(newVal);
 	
 	// minimum 100
@@ -362,11 +434,13 @@ bbjseditor.parseInt = function(_val) {
 }
 
 
-bbjseditor.updatePreview = function() {
+bbjseditor.updateHtmlPreview = function() {
 	var contentObj = document.getElementById("bbjseditor_content");
 	var previewObj = document.getElementById("bbjseditor_preview");
 	
-	previewObj.innerText = contentObj.innerHTML;
+	var result = contentObj.innerHTML;
+	previewObj.innerText = result;
+	return result;
 }
 
 
@@ -413,6 +487,7 @@ bbjseditor.updateButtons = function() {
 }
 
 
+/*
 bbjseditor.checkIE = function() {
 	var agent = navigator.userAgent.toLowerCase();
 	if ((navigator.appName == "Netscape" && agent.indexOf("trident") != -1) || (agent.indexOf("msie") != -1)) {
@@ -421,3 +496,4 @@ bbjseditor.checkIE = function() {
 	     return false;
 	}
 }
+*/
