@@ -1,0 +1,68 @@
+p, h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
+
+::selection {
+	background: #000000;
+	color: #FFFFFF;
+	text-shadow: none;
+}
+
+
+::-moz-selection {
+	background: #000000;
+	color: #FFFFFF;
+	text-shadow: none;
+}
+
+
+::-webkit-selection {
+	background: #000000;
+	color: #FFFFFF;
+	text-shadow: none;
+}
+
+
+.bbjseditor_button {
+	border: 1px solid #BBBBBB;
+	background-color: #FEFEFE;
+	width: 40px;
+	height: 30px;
+	margin-top: 5px;
+	margin-left: 5px;
+	cursor: pointer;
+	color: #555555;
+	font-weight: bold;
+}
+
+
+.bbjseditor_button:HOVER {
+	border: 1px solid #555555;
+}
+
+
+.bbjseditor_buttonbar {
+	border: 1px solid #BBBBBB;
+	background-color: #EEEEEE;
+}
+
+
+.bbjseditor_content {
+	border-top: 0xp;
+	border-right: 1px solid #BBBBBB;
+	border-left: 1px solid #BBBBBB;
+	border-bottom: 1px solid #BBBBBB;
+	word-break: break-all;
+	overflow: auto;
+}
+
+
+.bbjseditor_preview {
+	border-top: 0xp;
+	border-right: 1px solid #BBBBBB;
+	border-left: 1px solid #BBBBBB;
+	border-bottom: 1px solid #BBBBBB;
+	word-break: break-all;
+	overflow: auto;
+}

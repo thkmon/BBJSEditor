@@ -1,0 +1,5 @@
+@font-face {
+	/* thanks to Joungkyun. cf. https://github.com/Joungkyun/font-d2coding/releases */
+	font-family: D2Coding; 
+	src: url('/font/D2Coding.woff') format('woff');
+}
