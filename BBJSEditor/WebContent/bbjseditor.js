@@ -13,14 +13,32 @@ bbjseditor.createEditor = function(_divId, _width) {
 	
 	var divElem = document.getElementById(_divId);
 	
+	var titleBarHeight = "30";
+	var titleBarStyle = "width: " + _width + "; height: " + titleBarHeight + "px;";
+	
 	var buttonBarHeight = "40";
 	var buttonBarStyle = "width: " + _width + "; height: " + buttonBarHeight + "px;";
+	
+	var titleBarObj = document.createElement("div");
+	titleBarObj.setAttribute("id", "bbjseditor_titlebar");
+	titleBarObj.setAttribute("class", "bbjseditor_titlebar");
+	titleBarObj.setAttribute("style", titleBarStyle);
+	
+	var inputTitle = document.createElement("input");
+	inputTitle.setAttribute("type", "text");
+	inputTitle.setAttribute("id", "bbjseditor_title");
+	inputTitle.setAttribute("class", "bbjseditor_title");
+	inputTitle.setAttribute("maxlength", "200");
+	inputTitle.setAttribute("max", "200");
+	titleBarObj.appendChild(inputTitle);
+	
+	divElem.appendChild(titleBarObj);
+	
 	
 	var buttonBarObj = document.createElement("div");
 	buttonBarObj.setAttribute("id", "bbjseditor_buttonbar");
 	buttonBarObj.setAttribute("class", "bbjseditor_buttonbar");
 	buttonBarObj.setAttribute("style", buttonBarStyle);
-	
 	
 	var boldButton = document.createElement("input");
 	boldButton.setAttribute("type", "button");
@@ -46,12 +64,12 @@ bbjseditor.createEditor = function(_divId, _width) {
 	italicButton.setAttribute("onclick", "bbjseditor.setItalic()");
 	buttonBarObj.appendChild(italicButton);
 	
-	
 	divElem.appendChild(buttonBarObj);
 	
 	
+	bbjseditor.titleBarHeight = titleBarHeight;
 	bbjseditor.buttonBarHeight = buttonBarHeight;
-	var editorHeight = bbjseditor.calcEditorHeight(buttonBarHeight) + "px";
+	var editorHeight = bbjseditor.calcEditorHeight() + "px";
 	
 	
 	var contentObj = document.createElement("div");
@@ -292,11 +310,12 @@ bbjseditor.startsWith = function(_target, _str) {
 
 
 bbjseditor.calcEditorHeight = function() {
+	var titleBarHeight = bbjseditor.parseInt(bbjseditor.titleBarHeight);
 	var buttonBarHeight = bbjseditor.parseInt(bbjseditor.buttonBarHeight);
-	var margin = 20;
+	var margin = 40;
 	
 	var innerHeight = parseInt(window.innerHeight, 10);
-	var newVal = (innerHeight - buttonBarHeight - margin) / 2;
+	var newVal = (innerHeight - titleBarHeight - buttonBarHeight - margin) / 2;
 	newVal = bbjseditor.parseInt(newVal);
 	
 	// minimum 100
