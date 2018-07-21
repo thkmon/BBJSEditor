@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TEST PAGE</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
+	<link rel="stylesheet" type="text/css" href="base.css">
+	<link rel="stylesheet" type="text/css" href="bbjseditor.css">
+	<script type="text/javascript" src="bbjseditor.js"></script>
+	<script type="text/javascript">
+		window.onload = function() {
+			bbjseditor.createEditor("editorDiv", "500px");
+		}
+		
+		window.onresize = function() {
+			bbjseditor.resizeEditor();
+		}
+	</script>
+</head>
+<body>
+	<div id="editorDiv" style="width: 500px; font-family: D2Coding;">
+	</div>
+</body>
+</html>
