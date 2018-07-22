@@ -173,7 +173,7 @@ bbjseditor.setPicture = function() {
 }
 
 
-bbjseditor.uploadFileToServer = function(_localPath){
+bbjseditor.uploadFileToServer = function(_localPath) {
 	// please implement this function.
 	var serverPath = _localPath;
 	return serverPath;
@@ -252,7 +252,7 @@ bbjseditor.execCommand = function(_command) {
 
 	bbjseditor.focus();
 	
-	window.setTimeout(function(){
+	window.setTimeout(function() {
 		document.execCommand(_command, false, null);
 	}, 50);
 }
