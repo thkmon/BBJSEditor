@@ -140,7 +140,43 @@ bbjseditor.setItalic = function() {
 
 
 bbjseditor.setPicture = function() {
-	alert("setPicture");
+	var fileInput = document.createElement("input");
+	fileInput.setAttribute("type", "file");
+	fileInput.setAttribute("style", "display: none;");
+	document.getElementsByTagName("body")[0].appendChild(fileInput);
+	
+	fileInput.click();
+	var localPath = fileInput.value;
+	if (localPath == null || localPath == "") {
+		return false;
+	}
+	
+	var serverPath = bbjseditor.uploadFileToServer(localPath);
+	if (serverPath == null || serverPath == "") {
+		return false;
+	}
+	
+	var selection = window.getSelection();
+	if (selection == null) {
+		return false;
+	}
+	
+	var range = selection.getRangeAt(0);
+	if (range == null) {
+		return false;
+	}
+	
+	var pictureObj = document.createElement("img");
+	pictureObj.setAttribute("src", serverPath);
+	pictureObj.setAttribute("border", "1px solid #000000");
+	range.insertNode(pictureObj);	
+}
+
+
+bbjseditor.uploadFileToServer = function(_localPath){
+	// please implement this function.
+	var serverPath = _localPath;
+	return serverPath;
 }
 
 
