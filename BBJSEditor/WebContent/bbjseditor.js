@@ -13,11 +13,32 @@ bbjseditor.createEditor = function(_divId, _width) {
 	
 	var divElem = document.getElementById(_divId);
 	
+	var topBarHeight = "40";
+	var topBarStyle = "width: " + _width + "; height: " + topBarHeight + "px;";
+	
 	var titleBarHeight = "30";
 	var titleBarStyle = "width: " + _width + "; height: " + titleBarHeight + "px;";
 	
 	var buttonBarHeight = "40";
 	var buttonBarStyle = "width: " + _width + "; height: " + buttonBarHeight + "px;";
+	
+	
+	var topBarObj = document.createElement("div");
+	topBarObj.setAttribute("id", "bbjseditor_topbar");
+	topBarObj.setAttribute("class", "bbjseditor_topbar");
+	topBarObj.setAttribute("style", topBarStyle);
+	
+	var publishButton = document.createElement("input");
+	publishButton.setAttribute("type", "button");
+	publishButton.setAttribute("id", "bbjseditor_button_publish");
+	publishButton.setAttribute("class", "bbjseditor_button");
+	publishButton.setAttribute("style", "width: 60px; float: right; margin-right: 5px;");
+	publishButton.setAttribute("value", "Write");
+	publishButton.setAttribute("onclick", "bbjseditor.doPublish()");
+	topBarObj.appendChild(publishButton);
+	
+	divElem.appendChild(topBarObj);
+	
 	
 	var titleBarObj = document.createElement("div");
 	titleBarObj.setAttribute("id", "bbjseditor_titlebar");
@@ -84,6 +105,7 @@ bbjseditor.createEditor = function(_divId, _width) {
 	divElem.appendChild(buttonBarObj);
 	
 	
+	bbjseditor.topBarHeight = topBarHeight;
 	bbjseditor.titleBarHeight = titleBarHeight;
 	bbjseditor.buttonBarHeight = buttonBarHeight;
 	var editorHeight = bbjseditor.calcEditorHeight() + "px";
@@ -139,6 +161,7 @@ bbjseditor.setItalic = function() {
 }
 
 
+// please implement this function.
 bbjseditor.setPicture = function() {
 	var fileInput = document.createElement("input");
 	fileInput.setAttribute("type", "file");
@@ -151,7 +174,7 @@ bbjseditor.setPicture = function() {
 		return false;
 	}
 	
-	var serverPath = bbjseditor.uploadFileToServer(localPath);
+	var serverPath = localPath;
 	if (serverPath == null || serverPath == "") {
 		return false;
 	}
@@ -169,14 +192,9 @@ bbjseditor.setPicture = function() {
 	var pictureObj = document.createElement("img");
 	pictureObj.setAttribute("src", serverPath);
 	pictureObj.setAttribute("border", "1px solid #000000");
-	range.insertNode(pictureObj);	
-}
-
-
-bbjseditor.uploadFileToServer = function(_localPath) {
-	// please implement this function.
-	var serverPath = _localPath;
-	return serverPath;
+	range.insertNode(pictureObj);
+	
+	bbjseditor.focus();
 }
 
 
@@ -417,13 +435,13 @@ bbjseditor.startsWith = function(_target, _str) {
 
 
 bbjseditor.calcEditorHeight = function() {
+	var topBarHeight = bbjseditor.parseInt(bbjseditor.topBarHeight);
 	var titleBarHeight = bbjseditor.parseInt(bbjseditor.titleBarHeight);
 	var buttonBarHeight = bbjseditor.parseInt(bbjseditor.buttonBarHeight);
 	var margin = 40;
 	
 	var innerHeight = parseInt(window.innerHeight, 10);
-	// var newVal = (innerHeight - titleBarHeight - buttonBarHeight - margin) / 2;
-	var newVal = (innerHeight - titleBarHeight - buttonBarHeight - margin);
+	var newVal = (innerHeight - topBarHeight - titleBarHeight - buttonBarHeight - margin);
 	newVal = bbjseditor.parseInt(newVal);
 	
 	// minimum 100
